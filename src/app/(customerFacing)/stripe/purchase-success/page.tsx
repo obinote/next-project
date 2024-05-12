@@ -36,7 +36,7 @@ export default async function SuccessPage({
             src={product.imagePath}
             fill
             alt={product.name}
-            className="object-cover"
+            className="object-contain w-full aspect-video"
           />
         </div>
         <div>
