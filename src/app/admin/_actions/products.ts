@@ -27,21 +27,16 @@ export async function addProduct(prevState: unknown, formData: FormData) {
 
   const data = result.data;
 
-  // await fs.mkdir("products", { recursive: true })
-  // const filePath = `products/${crypto.randomUUID()}-${data.file.name}`
-  // await fs.writeFile(filePath, Buffer.from(await data.file.arrayBuffer()))
+  await fs.mkdir("products", { recursive: true })
+  const filePath = `products/${crypto.randomUUID()}-${data.file.name}`
+  await fs.writeFile(filePath, Buffer.from(await data.file.arrayBuffer()))
 
-  // await fs.mkdir("public/products", { recursive: true })
-  // const imagePath = `/products/${crypto.randomUUID()}-${data.image.name}`
-  // await fs.writeFile(
-  //   `public${imagePath}`,
-  //   Buffer.from(await data.image.arrayBuffer())
-  // )
-
-  const imagePath =
-    "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=2599&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
-  const filePath =
-    "https://res-academy.cache.wpscdn.com/images/d7805aca4a1d34495f37d14bc9f12ccb.png";
+  await fs.mkdir("public/products", { recursive: true })
+  const imagePath = `/products/${crypto.randomUUID()}-${data.image.name}`
+  await fs.writeFile(
+    `public${imagePath}`,
+    Buffer.from(await data.image.arrayBuffer())
+  )
 
   await db.product.create({
     data: {
