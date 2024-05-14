@@ -1,6 +1,6 @@
 import db from "@/db/db";
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs/promises";
+// import fs from "fs/promises";
 
 export async function GET(
   req: NextRequest,
@@ -18,15 +18,26 @@ export async function GET(
       new URL("/products/download/expired", req.url)
     );
   }
+  // return console.log(data.product.filePath);
 
-  const { size } = await fs.stat(data.product.filePath);
-  const file = await fs.readFile(data.product.filePath);
+  // const { size } = await fs.stat(data.product.filePath);
+  // const file = await fs.readFile(data.product.filePath);
+  // const extension = data.product.filePath.split(".").pop();
+  
+  const response = await fetch(data.product.filePath);
   const extension = data.product.filePath.split(".").pop();
+  
+  if (!response.ok) {
+    throw new Error('Failed to fetch image');
+  }
+  const imageData = await response.blob();
 
-  return new NextResponse(file, {
+  // return NextResponse(imageData, )
+  return new NextResponse(imageData, {
     headers: {
       "Content-Disposition": `attachment; filename="${data.product.name}.${extension}"`,
-      "Content-Length": size.toString(),
+      // "Content-Length": size.toString(),
+      // 'Content-Type': response.headers.get('Content-Type'),
     },
   });
 }
